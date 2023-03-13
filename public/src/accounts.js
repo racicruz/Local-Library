@@ -12,10 +12,13 @@ function getTotalNumberOfBorrows(account, books) {
   return totalBorrowed;
 }
 
+// **helper function**
+function findAuthor(authors, id) {
+  return authors.find(author => author.id === id);
+}
+
 function getBooksPossessedByAccount(account, books, authors) {
   let possessedBooks = [];
-   //creating a helper function to find the author by id number
-   const findAuthor = (authors, id) => authors.find(author => author.id === id);
    //creating an array of books that are filtered by the borrowers id returned status 
    possessedBooks = books.filter(book => book.borrows[0].id === account.id && !book.borrows[0].returned);
    //creating the format for the possesed book objects and putting current book and author info inside

@@ -14,7 +14,7 @@ function getBooksBorrowedCount(books) {
 }
 
 function getMostCommonGenres(books) {
-  const genreCount = books.reduce((array, book) => {
+  const top5Genres = books.reduce((array, book) => {
     const genre = array.find((gen) => gen.name === book.genre);
     if (!genre) {
       array.push({
@@ -26,26 +26,24 @@ function getMostCommonGenres(books) {
     }
     return array;
   }, []);
-  genreCount.sort((nameA, nameB) => nameB.count - nameA.count);
-  let top5Genres = genreCount.splice(0, 5);
-  return top5Genres;
+  top5Genres.sort((nameA, nameB) => nameB.count - nameA.count);
+  return top5Genres.splice(0, 5);
 }
 
 function getMostPopularBooks(books) {
-  const borrowCount = books.reduce((array, book) => {
+  const top5Popular = books.reduce((array, book) => {
     array.push({
       name: book.title,
       count: book.borrows.length,
     });
     return array;
   }, []);
-  borrowCount.sort((nameA, nameB) => nameB.count - nameA.count);
-  let top5Popular = borrowCount.splice(0, 5);
-  return top5Popular;
+  top5Popular.sort((nameA, nameB) => nameB.count - nameA.count);
+  return top5Popular.splice(0, 5);
 }
 
 function getMostPopularAuthors(books, authors) {
-  const popularAuthors = authors.map((author) => {
+  const top5Authors = authors.map((author) => {
     const authorName = `${author.name.first} ${author.name.last}`;
     const booksBy = books.filter((book) => book.authorId === author.id);
     const borrows = booksBy.reduce(
@@ -58,9 +56,8 @@ function getMostPopularAuthors(books, authors) {
     };
     return authorInfo;
   });
-  popularAuthors.sort((nameA, nameB) => nameB.count - nameA.count);
-  let top5Authors = popularAuthors.splice(0, 5);
-  return top5Authors;
+  top5Authors.sort((nameA, nameB) => nameB.count - nameA.count);
+  return top5Authors.splice(0, 5);
 }
 
 module.exports = {
